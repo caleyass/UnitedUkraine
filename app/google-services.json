@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "821750216772",
+    "project_id": "unitedukraine-62734",
+    "storage_bucket": "unitedukraine-62734.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:821750216772:android:f159b8efa140a10148a411",
+        "android_client_info": {
+          "package_name": "com.example.un"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_SwejSmQF7BV6kJrQWdCWwBLhV9pu8po"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:821750216772:android:889ff22609b38e0d48a411",
+        "android_client_info": {
+          "package_name": "com.example.unitedukraine"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_SwejSmQF7BV6kJrQWdCWwBLhV9pu8po"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
