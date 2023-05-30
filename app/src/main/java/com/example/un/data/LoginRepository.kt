@@ -1,6 +1,10 @@
 package com.example.un.data
 
 import com.example.un.data.model.LoggedInUser
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -23,20 +27,23 @@ class LoginRepository(val dataSource: LoginDataSource) {
     }
 
     fun logout() {
+
         user = null
         dataSource.logout()
     }
 
-    fun login(username: String, password: String): Result<LoggedInUser> {
-        // handle login
-        val result = dataSource.login(username, password)
+    suspend fun login(username: String, password: String, coroutineScope: CoroutineScope): Result<LoggedInUser> {
+        return withContext(coroutineScope.coroutineContext) {
+            val result = dataSource.login(username, password)
 
-        if (result is Result.Success) {
-            setLoggedInUser(result.data)
+            if (result is Result.Success) {
+                setLoggedInUser(result.data)
+            }
+
+            result
         }
-
-        return result
     }
+
 
     private fun setLoggedInUser(loggedInUser: LoggedInUser) {
         this.user = loggedInUser

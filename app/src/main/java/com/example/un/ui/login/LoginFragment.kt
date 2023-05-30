@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.example.un.databinding.FragmentLoginBinding
 
 import com.example.un.R
@@ -94,7 +95,8 @@ class LoginFragment : Fragment() {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 loginViewModel.login(
                     usernameEditText.text.toString(),
-                    passwordEditText.text.toString()
+                    passwordEditText.text.toString(),
+                    lifecycleScope
                 )
             }
             false
@@ -104,7 +106,8 @@ class LoginFragment : Fragment() {
             loadingProgressBar.visibility = View.VISIBLE
             loginViewModel.login(
                 usernameEditText.text.toString(),
-                passwordEditText.text.toString()
+                passwordEditText.text.toString(),
+                lifecycleScope
             )
         }
     }
