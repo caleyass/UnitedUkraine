@@ -36,6 +36,21 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         }
     }
 
+    fun register(username: String, password: String, coroutineScope: CoroutineScope) {
+        // can be launched in a separate asynchronous job
+        coroutineScope.launch(Dispatchers.Default) {
+            val result = loginRepository.register(username, password, coroutineScope)
+            withContext(Dispatchers.Main) {
+                if (result is Result.Success) {
+                    _loginResult.value =
+                        LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
+                } else {
+                    _loginResult.value = LoginResult(error = R.string.login_failed)
+                }
+            }
+        }
+    }
+
     fun loginDataChanged(username: String, password: String) {
         if (!isUserNameValid(username)) {
             _loginForm.value = LoginFormState(usernameError = R.string.invalid_username)

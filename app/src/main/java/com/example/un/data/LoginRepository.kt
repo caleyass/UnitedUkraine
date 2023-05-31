@@ -44,6 +44,18 @@ class LoginRepository(val dataSource: LoginDataSource) {
         }
     }
 
+    suspend fun register(username: String, password: String, coroutineScope: CoroutineScope): Result<LoggedInUser> {
+        return withContext(coroutineScope.coroutineContext) {
+            val result = dataSource.register(username, password)
+
+            if (result is Result.Success) {
+                setLoggedInUser(result.data)
+            }
+
+            result
+        }
+    }
+
 
     private fun setLoggedInUser(loggedInUser: LoggedInUser) {
         this.user = loggedInUser
