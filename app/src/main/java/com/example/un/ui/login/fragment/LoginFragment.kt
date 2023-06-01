@@ -1,4 +1,4 @@
-package com.example.un.ui.login
+package com.example.un.ui.login.fragment
 
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,17 +13,18 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.un.databinding.FragmentLoginBinding
 
 import com.example.un.R
+import com.example.un.ui.login.LoggedInUserView
+import com.example.un.ui.login.LoginViewModelFactory
+import com.example.un.ui.login.viewmodel.LoginViewModel
 
 class LoginFragment : Fragment() {
 
     private lateinit var loginViewModel: LoginViewModel
     private var _binding: FragmentLoginBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -31,10 +32,8 @@ class LoginFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,7 +53,6 @@ class LoginFragment : Fragment() {
                     return@Observer
                 }
                 loginButton.isEnabled = loginFormState.isDataValid
-                registerButton.isEnabled = loginFormState.isDataValid
                 loginFormState.usernameError?.let {
                     usernameEditText.error = getString(it)
                 }
@@ -113,12 +111,15 @@ class LoginFragment : Fragment() {
             )
         }
         registerButton.setOnClickListener {
-            loadingProgressBar.visibility = View.VISIBLE
-            loginViewModel.register(
+            //loadingProgressBar.visibility = View.VISIBLE
+            /*loginViewModel.register(
                 usernameEditText.text.toString(),
                 passwordEditText.text.toString(),
                 lifecycleScope
-            )
+            )*/
+            val action = LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
+            findNavController().navigate(action)
+
         }
     }
 

@@ -1,4 +1,4 @@
-package com.example.un.ui.login
+package com.example.un.ui.login.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,6 +8,10 @@ import com.example.un.data.LoginRepository
 import com.example.un.data.Result
 
 import com.example.un.R
+import com.example.un.ui.login.LoggedInUserView
+import com.example.un.ui.login.LoginFormState
+import com.example.un.ui.login.LoginResult
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,15 +40,14 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         }
     }
 
-    fun register(username: String, password: String, coroutineScope: CoroutineScope) {
+    fun register(fName:String, lName:String, username: String, password: String, coroutineScope: CoroutineScope) {
         // can be launched in a separate asynchronous job
         coroutineScope.launch(Dispatchers.Default) {
-            val result = loginRepository.register(username, password, coroutineScope)
+            val result = loginRepository.register(fName, lName, username, password, coroutineScope)
             withContext(Dispatchers.Main) {
                 if (result is Result.Success) {
                     _loginResult.value =
                         LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-
                 } else {
                     //TODO CHECK WHETER THE USER EXISTS?
                     _loginResult.value = LoginResult(error = R.string.login_failed)

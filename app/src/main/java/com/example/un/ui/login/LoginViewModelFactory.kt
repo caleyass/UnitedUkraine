@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.un.data.LoginDataSource
 import com.example.un.data.LoginRepository
+import com.example.un.ui.login.viewmodel.LoginViewModel
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.
