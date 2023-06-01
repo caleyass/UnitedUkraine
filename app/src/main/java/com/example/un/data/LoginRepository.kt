@@ -1,6 +1,7 @@
 package com.example.un.data
 
 import com.example.un.data.model.LoggedInUser
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
