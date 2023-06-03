@@ -1,6 +1,5 @@
 package com.example.un.ui.login.fragment
 
-import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.annotation.StringRes
@@ -135,7 +134,7 @@ class LoginFragment : Fragment() {
         Log.i("Last Name: ", user.lastName)
         Log.i("Email: ", user.email)
         if(user.profileCompleted == 0){
-            val action = LoginFragmentDirections.actionLoginFragmentToUserProfileFragment()
+            val action = LoginFragmentDirections.actionLoginFragmentToUserProfileFragment(user)
             findNavController().navigate(action)
         }else {
             // Redirect the user to Main Screen after log in.s

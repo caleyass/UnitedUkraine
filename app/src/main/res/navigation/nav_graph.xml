@@ -34,5 +34,8 @@
         android:id="@+id/userProfileFragment"
         android:name="com.example.un.main.fragment.UserProfileFragment"
         android:label="fragment_user_profile"
-        tools:layout="@layout/fragment_user_profile" />
+        tools:layout="@layout/fragment_user_profile" >
+        <argument android:name="extra_user_details"
+            app:argType="com.example.un.data.model.User" />
+    </fragment>
 </navigation>
