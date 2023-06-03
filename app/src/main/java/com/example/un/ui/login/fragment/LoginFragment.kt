@@ -1,5 +1,6 @@
 package com.example.un.ui.login.fragment
 
+import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.annotation.StringRes
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +19,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.un.databinding.FragmentLoginBinding
 
 import com.example.un.R
+import com.example.un.data.model.User
+import com.example.un.firestore.FirestoreClass
 import com.example.un.ui.login.LoggedInUserView
 import com.example.un.ui.login.LoginViewModelFactory
 import com.example.un.ui.login.viewmodel.LoginViewModel
@@ -70,6 +74,7 @@ class LoginFragment : Fragment() {
                 }
                 loginResult.success?.let {
                     updateUiWithUser(it)
+                    FirestoreClass().getUserDetails(this@LoginFragment)
                 }
             })
 
@@ -120,6 +125,22 @@ class LoginFragment : Fragment() {
             val action = LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
             findNavController().navigate(action)
 
+        }
+    }
+
+    fun userLoggedInSuccess(user: User) {
+
+        // Print the user details in the log as of now.
+        Log.i("First Name: ", user.firstName)
+        Log.i("Last Name: ", user.lastName)
+        Log.i("Email: ", user.email)
+        if(user.profileCompleted == 0){
+            val action = LoginFragmentDirections.actionLoginFragmentToUserProfileFragment()
+            findNavController().navigate(action)
+        }else {
+            // Redirect the user to Main Screen after log in.s
+            val action = LoginFragmentDirections.actionLoginFragmentToMainFragment()
+            findNavController().navigate(action)
         }
     }
 

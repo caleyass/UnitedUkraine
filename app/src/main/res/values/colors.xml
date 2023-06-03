@@ -7,5 +7,7 @@
     <color name="colorSecondaryText">#7C7C7C</color>
 
     <color name="colorTextInput">#F0EFEF</color>
+    <color name="colorLightGrey">#F1F1F1</color>
 
+    <color name="colorAccent">#ED2173</color>
 </resources>
