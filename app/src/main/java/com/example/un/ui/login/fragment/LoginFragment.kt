@@ -1,5 +1,7 @@
 package com.example.un.ui.login.fragment
 
+import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.annotation.StringRes
@@ -13,15 +15,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.un.NavigationDrawerActivity
 import com.example.un.databinding.FragmentLoginBinding
 
 import com.example.un.R
+import com.example.un.data.Constants
 import com.example.un.data.model.User
 import com.example.un.firestore.FirestoreClass
 import com.example.un.ui.login.LoggedInUserView
 import com.example.un.ui.login.LoginViewModelFactory
+import com.example.un.ui.login.SharedViewModel
 import com.example.un.ui.login.viewmodel.LoginViewModel
 
 class LoginFragment : Fragment() {
@@ -29,6 +37,7 @@ class LoginFragment : Fragment() {
     private lateinit var loginViewModel: LoginViewModel
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +50,25 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val actionBar = (activity as AppCompatActivity).supportActionBar
+        actionBar?.title = "Login"
+
+        val sharedPreferences =
+            this.requireActivity().getSharedPreferences(Constants.MYSHOPPAL_PREFERENCES, Context.MODE_PRIVATE)
+        val username = sharedPreferences.getString(Constants.LOGGED_IN_USERNAME, "")!!
+        Log.d("MyTag", username)
+        /*if(username.isNotEmpty()){
+            if(user.profileCompleted == 0){
+                val action = LoginFragmentDirections.actionLoginFragmentToUserProfileFragment(user)
+                findNavController().navigate(action)
+            }else {
+                // Redirect the user to Main Screen after log in.s
+                val action = LoginFragmentDirections.actionLoginFragmentToMainFragment()
+                findNavController().navigate(action)
+            }
+        }*/
+
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
 
@@ -133,13 +161,19 @@ class LoginFragment : Fragment() {
         Log.i("First Name: ", user.firstName)
         Log.i("Last Name: ", user.lastName)
         Log.i("Email: ", user.email)
+        viewModel.setUser(user)
+        viewModel.user.observe(viewLifecycleOwner){
+            it ->
+            Log.d("MyTag1", it.firstName)
+        }
         if(user.profileCompleted == 0){
             val action = LoginFragmentDirections.actionLoginFragmentToUserProfileFragment(user)
             findNavController().navigate(action)
         }else {
             // Redirect the user to Main Screen after log in.s
-            val action = LoginFragmentDirections.actionLoginFragmentToMainFragment()
-            findNavController().navigate(action)
+            /*val action = LoginFragmentDirections.actionLoginFragmentToMainFragment()
+            findNavController().navigate(action)*/
+            openActivity(user)
         }
     }
 
@@ -158,5 +192,11 @@ class LoginFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun openActivity(user:User) {
+        val intent = Intent(activity, NavigationDrawerActivity::class.java)
+        intent.putExtra("user", user)
+        startActivity(intent)
     }
 }

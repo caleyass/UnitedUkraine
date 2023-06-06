@@ -6,4 +6,12 @@
     </style>
 
     <style name="Theme.UnitedUkraine" parent="Base.Theme.UnitedUkraine" />
+
+    <style name="Theme.UnitedUkraine.NoActionBar" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Additional customizations if needed -->
+    </style>
+
+    <style name="Theme.UnitedUkraine.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.UnitedUkraine.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

@@ -41,4 +41,43 @@
     <string name="btn_lbl_save">Save</string>
     <string name="content_description">image</string>
 
+    <string name="read_storage_permission_denied">Oops, you just denied the permission for storage. You can also allow it from settings.</string>
+    <string name="image_selection_failed">Image selection Failed!</string>
+    <string name="err_msg_enter_mobile_number">Please enter mobile number.</string>
+    <string name="msg_profile_update_success">Your profile is updated successfully.</string>
+    <string name="title_activity_dashboard">DashboardActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="btn_lbl_submit">Submit</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Profile</string>
+    <string name="menu_slideshow">My charity</string>
+    <string name="all_charity">All charity</string>
+
+
+    <string name="action_add_product">Add Charity</string>
+    <string name="title_add_product">ADD CHARITY</string>
+    <string name="et_hint_product_title">Charity Title</string>
+    <string name="et_hint_product_price">Charity Goal ($)</string>
+    <string name="et_hint_product_description">Charity Description</string>
+    <string name="et_hint_product_quantity">Card Number</string>
+
+    <string name="err_msg_select_product_image">Please select charity image.</string>
+    <string name="err_msg_enter_product_title">Please enter charity title.</string>
+    <string name="err_msg_enter_product_price">Please enter charity goal.</string>
+    <string name="err_msg_enter_product_description">Please enter charity description.</string>
+    <string name="err_msg_enter_product_quantity">Please enter card number.</string>
+
+    <string name="product_uploaded_success_message">Your charity is uploaded successfully.</string>
+    <string name="no_products_added_yet">No products added yet!</string>
+    <string name="no_dashboard_item_found">No items found!</string>
 </resources>

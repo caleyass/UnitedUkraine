@@ -4,29 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.fragment.UserProfileFragment">
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_user_profile_activity"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+    tools:context=".main.fragment.UserProfileFragment"
+    android:theme="@style/Theme.UnitedUkraine.NoActionBar">
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingStart="@dimen/toolbar_title_paddingStart"
-            android:paddingEnd="0dp"
-            android:text="@string/title_complete_profile"
-            android:textColor="@color/black"
-            android:textSize="@dimen/toolbar_title_text_size"
-            android:textStyle="bold" />
-
-    </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -35,18 +15,21 @@
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_user_profile_activity">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+
             <FrameLayout
                 android:id="@+id/fl_user_image"
                 android:layout_width="@dimen/profile_user_image_size"
                 android:layout_height="@dimen/profile_user_image_size"
-                android:layout_marginTop="@dimen/profile_user_image_marginTop"
+                android:layout_marginTop="25dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -162,12 +145,13 @@
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="@dimen/et_textSize" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <RadioGroup
                 android:id="@+id/rg_gender"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/profile_radio_button_height"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toTopOf="@id/btn_submit"
@@ -202,10 +186,42 @@
                     android:textColor="@drawable/drawable_gender_tab_text_color_selector"
                     android:textStyle="bold" />
             </RadioGroup>
+
             <Button
                 android:id="@+id/btn_submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/colorAccent"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:paddingTop="@dimen/btn_padding"
+                android:paddingBottom="@dimen/btn_padding"
+                android:text="@string/btn_lbl_save"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/btn_textSize"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rg_gender" />
+
+            <ImageView
+                android:id="@+id/exit"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/baseline_exit_to_app_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!--<Button
+                android:id="@+id/btn_submit2"
+                android:layout_width="210dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="30dp"
@@ -221,8 +237,11 @@
                 android:textSize="@dimen/btn_textSize"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rg_gender" />
+                app:layout_constraintTop_toBottomOf="@id/rg_gender"
+                app:layout_constraintVertical_bias="1.0" />-->
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

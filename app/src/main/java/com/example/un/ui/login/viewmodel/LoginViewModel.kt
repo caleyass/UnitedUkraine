@@ -8,6 +8,7 @@ import com.example.un.data.LoginRepository
 import com.example.un.data.Result
 
 import com.example.un.R
+import com.example.un.data.model.User
 import com.example.un.ui.login.LoggedInUserView
 import com.example.un.ui.login.LoginFormState
 import com.example.un.ui.login.LoginResult
@@ -19,11 +20,15 @@ import kotlinx.coroutines.withContext
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
+
+
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
 
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
+
+
 
     fun login(username: String, password: String, coroutineScope: CoroutineScope) {
         // can be launched in a separate asynchronous job
