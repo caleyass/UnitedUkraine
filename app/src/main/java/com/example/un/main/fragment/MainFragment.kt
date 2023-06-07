@@ -29,7 +29,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        FirestoreClass().getCharityList(this)
+        FirestoreClass().getWholeCharityList(this)
     }
 
     fun successProductsListFromFireStore(productsList: ArrayList<Charity>) {

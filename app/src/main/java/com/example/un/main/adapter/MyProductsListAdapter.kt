@@ -1,16 +1,26 @@
 package com.example.un.main.adapter
 
 import android.content.Context
+import android.os.Bundle
+import android.provider.Settings.Global.putString
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.un.R
 import com.example.un.data.model.Charity
+import com.example.un.firestore.FirestoreClass
+import com.example.un.main.fragment.CharityDetailsFragment
 import com.squareup.picasso.Picasso
 import java.lang.IllegalArgumentException
 
@@ -48,6 +58,7 @@ open class MyProductsListAdapter(
         val imageView = itemView.findViewById<ImageView>(R.id.iv_item_image)
         val nameTextView = itemView.findViewById<TextView>(R.id.tv_item_name)
         val priceTextView = itemView.findViewById<TextView>(R.id.tv_item_price)
+        val deleteButton = itemView.findViewById<ImageView>(R.id.ib_delete_product)
         //GlideLoader(context).loadProductPicture(model.image, imageView)
         try {
             Picasso.get()
@@ -58,9 +69,35 @@ open class MyProductsListAdapter(
         }
         nameTextView.text = model.title
         priceTextView.text = "$${model.goal}"
+
+
+
+        itemView.setOnClickListener(View.OnClickListener {
+            //add notification with name
+            Toast.makeText(context, "Clicked on ${model.id}", Toast.LENGTH_SHORT).show()
+             // Replace with the actual charity ID
+            //val fragment = CharityDetailsFragment.newInstance(model.id)
+            // Navigate to the CharityDetailsFragment
+            //get recyclerView and replace it with CharityDetailsFragment
+            //clear recyclerView
+            holder.itemView.visibility = View.GONE
+            replaceFragment(fragment.parentFragmentManager, CharityDetailsFragment.newInstance(model.id))            //fragment.findNavController().navigate(R.id.action_homeFragment_to_charityDetailsFragment)
+        })
+        deleteButton.setOnClickListener(View.OnClickListener {
+            //add notification with name
+            //Toast.makeText(context, "Clicked on ${model.id} delete", Toast.LENGTH_SHORT).show()
+            FirestoreClass().deleteCharity(fragment, model.id)
+        })
+
     }
 
+    fun replaceFragment(fragmentManager: FragmentManager, newFragment: Fragment) {
+        val transaction = fragmentManager.beginTransaction()
 
+        transaction.replace(R.id.container, newFragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
     /**
      * Gets the number of items in the list
      */

@@ -10,6 +10,7 @@ import com.example.un.data.Constants
 import com.example.un.data.model.Charity
 import com.example.un.data.model.User
 import com.example.un.main.fragment.AddCharityFragment
+import com.example.un.main.fragment.CharityDetailsFragment
 import com.example.un.main.fragment.CharityFragment
 import com.example.un.main.fragment.MainFragment
 import com.example.un.main.fragment.UserProfileFragment
@@ -70,6 +71,54 @@ class FirestoreClass {
             }
     }
 
+    fun updateCharityDetails(fragment: CharityDetailsFragment, charityInfo: Charity) {
+
+        // The "users" is collection name. If the collection is already created then it will not create the same one again.
+        mFireStore.collection(Constants.CHARITY)
+            // Document ID for the charity fields. Use the provided charityId.
+            .document(charityInfo.id)
+            // Set the charityInfo fields and use SetOptions.merge() to merge instead of replacing the fields.
+            .set(charityInfo, SetOptions.merge())
+            .addOnSuccessListener {
+                Toast.makeText(
+                    fragment.requireContext(),
+                    "Your charity is successfully updated",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            .addOnFailureListener { e ->
+                Log.e(
+                    fragment.javaClass.simpleName,
+                    "Error while updating the charity.",
+                    e
+                )
+            }
+    }
+
+    fun deleteCharity(fragment: Fragment, charityId: String) {
+        // The "charities" is the collection name.
+        mFireStore.collection(Constants.CHARITY)
+            // Document ID for the charity to delete. Use the provided charityId.
+            .document(charityId)
+            // Delete the charity document.
+            .delete()
+            .addOnSuccessListener {
+                Toast.makeText(
+                    fragment.requireContext(),
+                    "Charity deleted successfully",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            .addOnFailureListener { e ->
+                Log.e(
+                    fragment.javaClass.simpleName,
+                    "Error while deleting the charity.",
+                    e
+                )
+            }
+    }
+
+
     fun uploadImageToCloudStorage(fragment: Fragment, imageFileURI: Uri?, imageType: String) {
 
         //getting the storage reference
@@ -102,6 +151,10 @@ class FirestoreClass {
                             }
 
                             is AddCharityFragment -> {
+                                fragment.imageUploadSuccess(uri.toString())
+                            }
+
+                            is CharityDetailsFragment -> {
                                 fragment.imageUploadSuccess(uri.toString())
                             }
                         }
@@ -234,6 +287,42 @@ class FirestoreClass {
     }
 
 
+    fun getCharity(fragment: Fragment,charityId: String) {
+        // The collection name for PRODUCTS
+        mFireStore.collection(Constants.CHARITY)
+            .get() // Will get the documents snapshots.
+            .addOnSuccessListener { document ->
+
+                // Here we get the list of boards in the form of documents.
+                Log.e("Products List", document.documents.toString())
+                val productsList: ArrayList<Charity> = ArrayList()
+
+                // A for loop as per the list of documents to convert them into Products ArrayList.
+                for (i in document.documents) {
+
+                    val product = i.toObject(Charity::class.java)
+                    product!!.id = i.id
+
+                    productsList.add(product)
+                }
+
+                // Here we have created a new instance for Products ArrayList.
+                val product = productsList.find { it.id == charityId }
+
+
+
+                when (fragment) {
+                    is CharityDetailsFragment -> {
+                        fragment.populateFields(product!!)
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+                // Hide the progress dialog if there is any error based on the base class instance.
+                Log.e("Get Product List", "Error while getting product list.", e)
+            }
+    }
+
     fun getWholeCharityList(fragment: Fragment) {
         // The collection name for PRODUCTS
         mFireStore.collection(Constants.CHARITY)
@@ -256,8 +345,8 @@ class FirestoreClass {
                 }
 
                 when (fragment) {
-                    is CharityFragment -> {
-                        fragment.successCharityListFromFireStore(productsList)
+                    is MainFragment -> {
+                        fragment.successProductsListFromFireStore(productsList)
                     }
                 }
             }

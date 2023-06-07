@@ -41,6 +41,7 @@ object Constants {
     const val GOAL: String = "card"
     const val PRODUCT_IMAGE: String = "Product_Image"
     const val USER_ID = "user_id"
+    const val CHARITY_ID = "id"
 
 
     const val USER_PROFILE_IMAGE:String = "User_Profile_Image"
