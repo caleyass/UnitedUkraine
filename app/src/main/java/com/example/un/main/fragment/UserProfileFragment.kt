@@ -32,6 +32,7 @@ import com.example.un.databinding.FragmentUserProfileBinding
 import com.example.un.firestore.FirestoreClass
 import com.example.un.ui.login.LoginViewModelFactory
 import com.example.un.ui.login.SharedViewModel
+import com.example.un.ui.login.fragment.LoginFragmentDirections
 import com.example.un.ui.login.viewmodel.LoginViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.squareup.picasso.Picasso
@@ -46,6 +47,7 @@ class UserProfileFragment : Fragment() {
     private var user: User? = null
     private var mSelectedImageFileUri:Uri? = null
     private var mUserProfileImageURL: String = ""
+    private var openedFromFragment = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,8 +65,10 @@ class UserProfileFragment : Fragment() {
         try {
             val args: UserProfileFragmentArgs by navArgs()
             if (args != null) {
-                if (args.extraUserDetails != null)
+                if (args.extraUserDetails != null) {
                     user = args.extraUserDetails
+                    openedFromFragment = true
+                }
             }
         } catch (e:IllegalStateException){
 
@@ -136,9 +140,10 @@ class UserProfileFragment : Fragment() {
                 if(mSelectedImageFileUri!=null) {
                     uploadImageToCloudStorage(this, mSelectedImageFileUri)
                     updateUserProfileDetails()
+                    if(openedFromFragment){
+                        openActivity(user!!)
+                    }
                 }
-
-
             }
         }
     }
@@ -243,8 +248,9 @@ class UserProfileFragment : Fragment() {
             userHashMap
         )
     }
-    fun openActivity() {
+    fun openActivity(user:User) {
         val intent = Intent(activity, NavigationDrawerActivity::class.java)
+        intent.putExtra("user", user)
         startActivity(intent)
     }
 }

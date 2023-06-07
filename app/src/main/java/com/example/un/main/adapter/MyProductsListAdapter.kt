@@ -80,7 +80,7 @@ open class MyProductsListAdapter(
             // Navigate to the CharityDetailsFragment
             //get recyclerView and replace it with CharityDetailsFragment
             //clear recyclerView
-            holder.itemView.visibility = View.GONE
+            //holder.itemView.visibility = View.GONE
             replaceFragment(fragment.parentFragmentManager, CharityDetailsFragment.newInstance(model.id))            //fragment.findNavController().navigate(R.id.action_homeFragment_to_charityDetailsFragment)
         })
         deleteButton.setOnClickListener(View.OnClickListener {
