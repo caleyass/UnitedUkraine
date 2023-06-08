@@ -60,8 +60,8 @@
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Profile</string>
-    <string name="menu_slideshow">My charity</string>
-    <string name="all_charity">All charity</string>
+    <string name="menu_slideshow">Add charity</string>
+    <string name="my_charity">My charity</string>
 
 
     <string name="action_add_product">Add Charity</string>

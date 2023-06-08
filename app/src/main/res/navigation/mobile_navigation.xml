@@ -9,7 +9,7 @@
         android:id="@+id/nav_home"
         android:name="com.example.un.main.fragment.MainFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_user_profile" />
+        tools:layout="@layout/fragment_main" />
 
     <fragment
         android:id="@+id/nav_gallery"
@@ -22,4 +22,12 @@
         android:name="com.example.un.main.fragment.AddCharityFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_addcharity" />
+
+    <fragment
+        android:id="@+id/nav_mycharity"
+        android:name="com.example.un.main.fragment.CharityFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_charity" />
+
+
 </navigation>
