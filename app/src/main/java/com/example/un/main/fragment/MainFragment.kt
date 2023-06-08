@@ -6,8 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.un.R
 import com.example.un.data.Constants
 import com.example.un.data.model.Charity
 import com.example.un.databinding.FragmentMainBinding
@@ -23,6 +27,7 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+        FirestoreClass().getCategories(this)
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -55,6 +60,26 @@ class MainFragment : Fragment() {
         } else {
             binding.rvDashboardItems.visibility = View.GONE
             binding.tvNoDashboardItemsFound.visibility = View.VISIBLE
+        }
+    }
+
+    fun populateDropdown(categories: ArrayList<String>){
+        val spinner: Spinner = this.view?.findViewById(R.id.spinner) as Spinner
+        val adapter = ArrayAdapter(this.requireContext(), android.R.layout.simple_spinner_item, categories)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                // Handle the selection change here
+                val selectedItem = parent?.getItemAtPosition(position).toString()
+                FirestoreClass().getCharityByCategoryList(this@MainFragment, selectedItem)
+                // Do something with the selected item
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Handle the case where nothing is selected
+            }
         }
     }
 

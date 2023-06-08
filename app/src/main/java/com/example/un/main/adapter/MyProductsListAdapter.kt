@@ -7,7 +7,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.os.bundleOf
@@ -31,7 +33,10 @@ open class MyProductsListAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 // END
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return object : RecyclerView.ViewHolder(
+    //get spinner from parent
+
+
+    return object : RecyclerView.ViewHolder(
             LayoutInflater.from(context).inflate(
                 R.layout.item_list_layout,
                 parent,
@@ -71,23 +76,28 @@ open class MyProductsListAdapter(
         priceTextView.text = "$${model.goal}"
 
 
-
-        itemView.setOnClickListener(View.OnClickListener {
-            //add notification with name
-            Toast.makeText(context, "Clicked on ${model.id}", Toast.LENGTH_SHORT).show()
-             // Replace with the actual charity ID
-            //val fragment = CharityDetailsFragment.newInstance(model.id)
-            // Navigate to the CharityDetailsFragment
-            //get recyclerView and replace it with CharityDetailsFragment
-            //clear recyclerView
-            //holder.itemView.visibility = View.GONE
-            replaceFragment(fragment.parentFragmentManager, CharityDetailsFragment.newInstance(model.id))            //fragment.findNavController().navigate(R.id.action_homeFragment_to_charityDetailsFragment)
-        })
-        deleteButton.setOnClickListener(View.OnClickListener {
-            //add notification with name
-            //Toast.makeText(context, "Clicked on ${model.id} delete", Toast.LENGTH_SHORT).show()
-            FirestoreClass().deleteCharity(fragment, model.id)
-        })
+        if(model.user_id == FirestoreClass().getCurrentUserID()) {
+            deleteButton.visibility = View.VISIBLE
+            itemView.setOnClickListener(View.OnClickListener {
+                //add notification with name
+                Toast.makeText(context, "Clicked on ${model.id}", Toast.LENGTH_SHORT).show()
+                // Replace with the actual charity ID
+                //val fragment = CharityDetailsFragment.newInstance(model.id)
+                // Navigate to the CharityDetailsFragment
+                //get recyclerView and replace it with CharityDetailsFragment
+                //clear recyclerView
+                holder.itemView.visibility = View.GONE
+                replaceFragment(
+                    fragment.parentFragmentManager,
+                    CharityDetailsFragment.newInstance(model.id)
+                )            //fragment.findNavController().navigate(R.id.action_homeFragment_to_charityDetailsFragment)
+            })
+            deleteButton.setOnClickListener(View.OnClickListener {
+                //add notification with name
+                //Toast.makeText(context, "Clicked on ${model.id} delete", Toast.LENGTH_SHORT).show()
+                FirestoreClass().deleteCharity(fragment, model.id)
+            })
+        }
 
     }
 
@@ -101,6 +111,8 @@ open class MyProductsListAdapter(
     /**
      * Gets the number of items in the list
      */
+
+
     override fun getItemCount(): Int {
         return list.size
     }

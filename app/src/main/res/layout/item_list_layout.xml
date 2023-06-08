@@ -67,6 +67,7 @@
         android:foreground="?attr/selectableItemBackgroundBorderless"
         android:padding="@dimen/delete_icon_padding"
         android:src="@drawable/ic_vector_delete"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ll_product_details"
         app:layout_constraintTop_toTopOf="parent" />

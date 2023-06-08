@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment
 import com.example.un.data.Constants
 import com.example.un.data.model.Charity
 import com.example.un.data.model.User
+import com.example.un.main.adapter.MyProductsListAdapter
 import com.example.un.main.fragment.AddCharityFragment
 import com.example.un.main.fragment.CharityDetailsFragment
-import com.example.un.main.fragment.CharityFragment
 import com.example.un.main.fragment.MainFragment
 import com.example.un.main.fragment.UserProfileFragment
 import com.example.un.ui.login.fragment.LoginFragment
@@ -349,6 +349,76 @@ class FirestoreClass {
                         fragment.successProductsListFromFireStore(productsList)
                     }
                 }
+            }
+            .addOnFailureListener { e ->
+                // Hide the progress dialog if there is any error based on the base class instance.
+                Log.e("Get Product List", "Error while getting product list.", e)
+            }
+    }
+
+    fun getCharityByCategoryList(fragment: Fragment, category: String) {
+        // The collection name for PRODUCTS
+        mFireStore.collection(Constants.CHARITY)
+            .whereEqualTo(Constants.CATEGORY, category)
+            .get() // Will get the documents snapshots.
+            .addOnSuccessListener { document ->
+
+                // Here we get the list of boards in the form of documents.
+                Log.e("Products List", document.documents.toString())
+
+                // Here we have created a new instance for Products ArrayList.
+                val productsList: ArrayList<Charity> = ArrayList()
+
+                // A for loop as per the list of documents to convert them into Products ArrayList.
+                for (i in document.documents) {
+
+                    val product = i.toObject(Charity::class.java)
+                    product!!.id = i.id
+
+                    productsList.add(product)
+                }
+
+                when (fragment) {
+                    is MainFragment -> {
+                        fragment.successProductsListFromFireStore(productsList)
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+                // Hide the progress dialog if there is any error based on the base class instance.
+                Log.e("Get Product List", "Error while getting product list.", e)
+            }
+    }
+
+    fun getCategories(fragment: Fragment) {
+        val categoryList: ArrayList<String> = ArrayList()
+        mFireStore.collection(Constants.CHARITY)
+            .get() // Will get the documents snapshots.
+            .addOnSuccessListener { document ->
+
+                // Here we get the list of boards in the form of documents.
+                Log.e("Products List", document.documents.toString())
+
+                // Here we have created a new instance for Products ArrayList.
+
+
+                // A for loop as per the list of documents to convert them into Products ArrayList.
+                for (i in document.documents) {
+
+                    val product = i.toObject(Charity::class.java)
+                    product!!.id = i.id
+
+                    if(!categoryList.contains(product.category)) {
+                        categoryList.add(product.category)
+                    }
+                }
+
+                when (fragment) {
+                    is MainFragment -> {
+                        fragment.populateDropdown(categoryList)
+                    }
+                }
+
             }
             .addOnFailureListener { e ->
                 // Hide the progress dialog if there is any error based on the base class instance.
