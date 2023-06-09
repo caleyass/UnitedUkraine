@@ -23,6 +23,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.un.MainActivity
 import com.example.un.NavigationDrawerActivity
 import com.example.un.R
 import com.example.un.data.Constants
@@ -102,6 +103,7 @@ class UserProfileFragment : Fragment() {
         }
         binding.exit.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
+            openActivity2()
         }
         binding.ivUserPhoto.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
@@ -251,6 +253,10 @@ class UserProfileFragment : Fragment() {
     fun openActivity(user:User) {
         val intent = Intent(activity, NavigationDrawerActivity::class.java)
         intent.putExtra("user", user)
+        startActivity(intent)
+    }
+    fun openActivity2() {
+        val intent = Intent(activity, MainActivity::class.java)
         startActivity(intent)
     }
 }
