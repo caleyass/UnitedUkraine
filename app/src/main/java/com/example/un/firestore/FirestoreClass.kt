@@ -12,6 +12,7 @@ import com.example.un.data.model.User
 import com.example.un.main.adapter.MyProductsListAdapter
 import com.example.un.main.fragment.AddCharityFragment
 import com.example.un.main.fragment.CharityDetailsFragment
+import com.example.un.main.fragment.CharityFragment
 import com.example.un.main.fragment.MainFragment
 import com.example.un.main.fragment.UserProfileFragment
 import com.example.un.ui.login.fragment.LoginFragment
@@ -278,6 +279,10 @@ class FirestoreClass {
                     is MainFragment -> {
                         fragment.successProductsListFromFireStore(productsList)
                     }
+
+                    is CharityFragment -> {
+                        fragment.successCharityListFromFireStore(productsList)
+                    }
                 }
             }
             .addOnFailureListener { e ->
@@ -348,6 +353,8 @@ class FirestoreClass {
                     is MainFragment -> {
                         fragment.successProductsListFromFireStore(productsList)
                     }
+
+
                 }
             }
             .addOnFailureListener { e ->

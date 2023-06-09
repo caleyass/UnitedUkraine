@@ -27,7 +27,7 @@ class CharityFragment:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        FirestoreClass().getWholeCharityList(this)
+        FirestoreClass().getCharityList(this)
     }
 
     fun successCharityListFromFireStore(productsList: ArrayList<Charity>) {

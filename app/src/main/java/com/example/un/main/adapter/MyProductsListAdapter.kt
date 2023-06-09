@@ -74,7 +74,10 @@ open class MyProductsListAdapter(
         }
         nameTextView.text = model.title
         priceTextView.text = "$${model.goal}"
-
+        if(model.checked){
+            //set background to red
+            itemView.findViewById<TextView>(R.id.is_verified).visibility = View.GONE
+        }
 
         if(model.user_id == FirestoreClass().getCurrentUserID()) {
             deleteButton.visibility = View.VISIBLE
