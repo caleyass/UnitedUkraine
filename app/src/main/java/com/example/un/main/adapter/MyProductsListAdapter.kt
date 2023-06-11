@@ -81,20 +81,6 @@ open class MyProductsListAdapter(
 
         if(model.user_id == FirestoreClass().getCurrentUserID()) {
             deleteButton.visibility = View.VISIBLE
-            itemView.setOnClickListener(View.OnClickListener {
-                //add notification with name
-                Toast.makeText(context, "Clicked on ${model.id}", Toast.LENGTH_SHORT).show()
-                // Replace with the actual charity ID
-                //val fragment = CharityDetailsFragment.newInstance(model.id)
-                // Navigate to the CharityDetailsFragment
-                //get recyclerView and replace it with CharityDetailsFragment
-                //clear recyclerView
-                holder.itemView.visibility = View.GONE
-                replaceFragment(
-                    fragment.parentFragmentManager,
-                    CharityDetailsFragment.newInstance(model.id)
-                )            //fragment.findNavController().navigate(R.id.action_homeFragment_to_charityDetailsFragment)
-            })
             deleteButton.setOnClickListener(View.OnClickListener {
                 //add notification with name
                 //Toast.makeText(context, "Clicked on ${model.id} delete", Toast.LENGTH_SHORT).show()
@@ -102,12 +88,23 @@ open class MyProductsListAdapter(
             })
         }
 
+        itemView.setOnClickListener(View.OnClickListener {
+            holder.itemView.visibility = View.GONE
+            replaceFragment(
+                fragment.parentFragmentManager,
+                CharityDetailsFragment.newInstance(model.id, model.user_id == FirestoreClass().getCurrentUserID()),
+                fragment
+            )
+        })
+
     }
 
-    fun replaceFragment(fragmentManager: FragmentManager, newFragment: Fragment) {
+    fun replaceFragment(fragmentManager: FragmentManager, newFragment: Fragment, existingFragment: Fragment) {
         val transaction = fragmentManager.beginTransaction()
 
         transaction.replace(R.id.container, newFragment)
+        //make visibility gone for R.id.rv_dashboard_items
+        existingFragment.view?.findViewById<RecyclerView>(R.id.rv_dashboard_items)?.visibility = View.GONE
         transaction.addToBackStack(null)
         transaction.commit()
     }

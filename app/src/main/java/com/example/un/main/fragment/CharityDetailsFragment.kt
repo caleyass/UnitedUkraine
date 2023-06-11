@@ -1,6 +1,8 @@
 package com.example.un.main.fragment
 
-import android.content.Context
+import android.content.ClipData
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,9 +12,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
@@ -47,9 +51,29 @@ class CharityDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         charityId = arguments?.getString("charity_id") ?: ""
-
+        val owner = arguments?.getBoolean("owner") ?: false
         // Fetch the charity details from the database and populate the fields
         fetchCharityDetails()
+        if(owner == false){
+            binding.btnSubmit.visibility = View.GONE
+            binding.btnSubmit2.visibility = View.GONE
+
+            val editText = view.findViewById<EditText>(R.id.et_product_quantity)
+            editText.isFocusable = false
+            editText.isClickable = true
+
+            editText.setOnClickListener {
+                val clipboardManager = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clipData = ClipData.newPlainText("text", editText.text.toString())
+                clipboardManager.setPrimaryClip(clipData)
+                Toast.makeText(context, "Зкопіював номер картки", Toast.LENGTH_SHORT).show()
+            }
+
+            binding.etProductTitle.isEnabled = false
+            binding.etProductPrice.isEnabled = false
+            binding.etProductDescription.isEnabled = false
+
+        }
         imagePickerLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             if (uri != null) {
                 // Handle the selected image URI
@@ -225,9 +249,10 @@ class CharityDetailsFragment : Fragment() {
     public companion object {
         public const val ARG_CHARITY_ID = "charity_id"
 
-        public fun newInstance(charityId: String): CharityDetailsFragment {
+        public fun newInstance(charityId: String, owner: Boolean): CharityDetailsFragment {
             val args = Bundle()
             args.putString(ARG_CHARITY_ID, charityId)
+            args.putBoolean("owner", owner)
             val fragment = CharityDetailsFragment()
             fragment.arguments = args
             return fragment
