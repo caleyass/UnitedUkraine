@@ -141,6 +141,22 @@ class AddCharityFragment : Fragment() {
                 false
             }
             else -> {
+                if(binding.etProductQuantity.text.toString().length != 16 || binding.etProductQuantity.text.toString().any() { it.isLetter() }){
+                    Toast.makeText(
+                        this.requireContext(),
+                        resources.getString(R.string.err_msg_enter_product_quantity),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return false
+                }
+                else if(binding.etProductPrice.text.toString().any() { it.isLetter() }){
+                    Toast.makeText(
+                        this.requireContext(),
+                        resources.getString(R.string.err_msg_enter_product_price),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return false
+                }
                 true
             }
         }
@@ -180,6 +196,7 @@ class AddCharityFragment : Fragment() {
         val goal = binding.etProductPrice.text.toString().trim { it <= ' ' }.toLong()
         val description = binding.etProductDescription.text.toString().trim { it <= ' ' }
         val card = binding.etProductQuantity.text.toString().trim { it <= ' ' }.toLong()
+        val category = "Не верифіковані"
         Log.d("MyTag", title)
         Log.d("MyTag", description)
 
@@ -190,7 +207,8 @@ class AddCharityFragment : Fragment() {
             goal,
             description,
             card,
-            mCharityImageURL
+            mCharityImageURL,
+            category
         )
 
         FirestoreClass().uploadCharityDetails(this, product)

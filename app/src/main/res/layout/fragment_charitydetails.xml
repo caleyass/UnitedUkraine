@@ -116,18 +116,4 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/btn_textSize" />
 
-    <Button
-        android:id="@+id/btn_submit2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@color/colorAccent"
-        android:foreground="?attr/selectableItemBackground"
-        android:gravity="center"
-        android:paddingTop="@dimen/btn_padding"
-        android:paddingBottom="@dimen/btn_padding"
-        android:text="@string/btn_lbl_save"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/btn_textSize" />
-
 </LinearLayout>

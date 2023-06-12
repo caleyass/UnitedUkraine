@@ -25,8 +25,9 @@
             android:id="@+id/spinner"
             android:layout_width="match_parent"
             android:layout_height="43dp"
-            android:background="@color/design_default_color_primary"
-            android:outlineProvider="background" />
+            android:background="?attr/colorPrimary"
+            android:outlineProvider="background"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/tv_no_dashboard_items_found"

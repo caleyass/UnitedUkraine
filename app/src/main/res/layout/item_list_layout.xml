@@ -33,7 +33,11 @@
             android:layout_width="@dimen/item_image_width"
             android:layout_height="@dimen/item_image_height"
             android:contentDescription="@string/content_description"
-            android:scaleType="fitXY" />
+            android:rotation="270"
+            android:rotationX="0"
+            android:rotationY="0"
+            android:scaleType="fitXY"
+            tools:srcCompat="@tools:sample/avatars" />
     </LinearLayout>
 
     <!--TODO Step 2: Update the item list design.-->

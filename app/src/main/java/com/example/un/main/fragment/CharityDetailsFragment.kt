@@ -34,6 +34,7 @@ class CharityDetailsFragment : Fragment() {
     private var mSelectedImageFileUri: Uri? = null
     private var mCharityImageURL: String = ""
     private var imageChanged = false
+    private var charity: Charity? = null
 
     private lateinit var charityId: String
 
@@ -56,7 +57,6 @@ class CharityDetailsFragment : Fragment() {
         fetchCharityDetails()
         if(owner == false){
             binding.btnSubmit.visibility = View.GONE
-            binding.btnSubmit2.visibility = View.GONE
 
             val editText = view.findViewById<EditText>(R.id.et_product_quantity)
             editText.isFocusable = false
@@ -115,6 +115,7 @@ class CharityDetailsFragment : Fragment() {
         binding.etProductDescription.setText(charity.description)
         binding.etProductQuantity.setText(charity.card.toString())
         mSelectedImageFileUri = charity.image.toUri()
+        this.charity = charity
         // Load the charity image using the image URL
         Picasso.get()
             .load(charity.image)
@@ -143,7 +144,7 @@ class CharityDetailsFragment : Fragment() {
             description,
             card,
             mSelectedImageFileUri.toString(),
-            "",
+            "Не верифіковані",
             false,
             charityId
         )
