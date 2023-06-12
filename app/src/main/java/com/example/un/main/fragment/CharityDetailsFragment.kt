@@ -152,7 +152,7 @@ class CharityDetailsFragment : Fragment() {
             goal,
             description,
             card,
-            mSelectedImageFileUri.toString(),
+            mCharityImageURL,
             "Не верифіковані",
             false,
             charityId
@@ -229,16 +229,11 @@ class CharityDetailsFragment : Fragment() {
      * @return True if the details are valid, false otherwise.
      */
     private fun uploadCharityImage() {
-        if(imageChanged) {
-            FirestoreClass().uploadImageToCloudStorage(
-                this,
-                mSelectedImageFileUri,
-                Constants.PRODUCT_IMAGE
-            )
-        }
-        else{
-            updateCharityDetails()
-        }
+        FirestoreClass().uploadImageToCloudStorage(
+            this,
+            mSelectedImageFileUri,
+            Constants.PRODUCT_IMAGE
+        )
     }
     /**
      * Callback function called when the image upload is successful.
