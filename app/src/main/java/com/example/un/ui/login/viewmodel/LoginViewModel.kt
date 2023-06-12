@@ -28,8 +28,12 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
 
-
-
+    /**
+     *Performs the login operation with the provided username and password.
+     *@param username The username entered by the user.
+     *@param password The password entered by the user.
+     *@param coroutineScope The CoroutineScope used to launch the asynchronous job.
+     */
     fun login(username: String, password: String, coroutineScope: CoroutineScope) {
         // can be launched in a separate asynchronous job
         coroutineScope.launch(Dispatchers.Default) {
@@ -45,6 +49,14 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         }
     }
 
+    /**
+     *Performs the registration operation with the provided first name, last name, username, and password.
+     *@param fName The first name entered by the user during registration.
+     *@param lName The last name entered by the user during registration.
+     *@param username The username entered by the user during registration.
+     *@param password The password entered by the user during registration.
+     *@param coroutineScope The CoroutineScope used to launch the asynchronous job.
+     */
     fun register(fName:String, lName:String, username: String, password: String, coroutineScope: CoroutineScope) {
         // can be launched in a separate asynchronous job
         coroutineScope.launch(Dispatchers.Default) {

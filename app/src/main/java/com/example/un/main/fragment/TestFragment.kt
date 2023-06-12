@@ -20,7 +20,14 @@ class TestFragment : Fragment() {
     private var _binding: FragmentTestBinding? = null
     private val binding get() = _binding!!
     private lateinit var imagePickerLauncher: ActivityResultLauncher<String>
-
+    /**
+     * Called when the fragment should create its view hierarchy.
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container If non-null, this is the parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     * @return Returns the View for the fragment's UI, or null.
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,7 +36,12 @@ class TestFragment : Fragment() {
         _binding = FragmentTestBinding.inflate(inflater, container, false)
         return binding.root
     }
-
+    /**
+     * Called immediately after onCreateView() has returned, but before any saved state has been restored into the view.
+     *
+     * @param view The View returned by onCreateView().
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         imagePickerLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
@@ -79,6 +91,9 @@ class TestFragment : Fragment() {
             pickImage()
         }
     }
+    /**
+     * Launches the image picker to select an image.
+     */
     private fun pickImage() {
         imagePickerLauncher.launch("image/*")
     }

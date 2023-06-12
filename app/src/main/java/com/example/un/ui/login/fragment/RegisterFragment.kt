@@ -76,7 +76,14 @@ class RegisterFragment : Fragment() {
             registerUser()
         }
     }
-
+    /**
+     * Validates the registration details entered by the user.
+     * Displays error messages if any of the fields are empty or if the passwords do not match.
+     * Also checks if the terms and conditions checkbox is checked.
+     * Returns true if all the validations pass, false otherwise.
+     *
+     * @return True if the registration details are valid, false otherwise.
+     */
     private fun validateRegisterDetails(): Boolean {
         val appContext = context?.applicationContext
         return when {
@@ -119,7 +126,13 @@ class RegisterFragment : Fragment() {
             }
         }
     }
-
+    /**
+     * Registers a new user with the provided details.
+     * Validates the entries and initiates the registration process.
+     * If the entries are valid, the user is registered with the provided email and password.
+     * After successful registration, the user is signed out and the progress bar is shown.
+     * Note: Make sure to call validateRegisterDetails() before calling this function.
+     */
     private fun registerUser() {
 
         // Check with validate function if the entries are valid or not.
@@ -142,14 +155,22 @@ class RegisterFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
+    /**
+     * Updates the UI with the logged-in user information.
+     *
+     * @param model The LoggedInUserView object containing the user information.
+     */
     private fun updateUiWithUser(model: LoggedInUserView) {
         val welcome = getString(R.string.welcome) + model.displayName
         // TODO : initiate successful logged in experience
         val appContext = context?.applicationContext ?: return
         Toast.makeText(appContext, welcome, Toast.LENGTH_LONG).show()
     }
-
+    /**
+     * Shows a registration failure message.
+     *
+     * @param errorString The string resource ID of the error message.
+     */
     private fun showRegisterFailed(@StringRes errorString: Int) {
         val appContext = context?.applicationContext ?: return
         Toast.makeText(appContext, errorString, Toast.LENGTH_LONG).show()

@@ -8,7 +8,10 @@ import androidx.navigation.ui.NavigationUI
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
-
+    /**
+    *Called when the activity is being created. Responsible for initializing the activity and setting up the layout.
+    *@param savedInstanceState The saved instance state bundle.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

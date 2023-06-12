@@ -39,7 +39,11 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //FirestoreClass().getWholeCharityList(this)
     }
-
+    /**
+     * Callback function called when the products list is successfully retrieved from Firestore.
+     *
+     * @param productsList The list of products retrieved from Firestore.
+     */
     fun successProductsListFromFireStore(productsList: ArrayList<Charity>) {
 
         // Hide Progress dialog.
@@ -65,7 +69,11 @@ class MainFragment : Fragment() {
             binding.tvNoDashboardItemsFound.visibility = View.VISIBLE
         }
     }
-
+    /**
+     * Populates the dropdown spinner with the provided categories.
+     *
+     * @param categories The list of categories to populate in the spinner.
+     */
     fun populateDropdown(categories: ArrayList<String>){
         val spinner: Spinner = this.view?.findViewById(R.id.spinner) as Spinner
         val adapter = ArrayAdapter(this.requireContext(), android.R.layout.simple_spinner_item, categories)

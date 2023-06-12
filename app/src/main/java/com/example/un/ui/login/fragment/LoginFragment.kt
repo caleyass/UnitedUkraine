@@ -47,7 +47,12 @@ class LoginFragment : Fragment() {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
     }
-
+    /**
+     * Called when the view has been created. Performs initialization and sets up event listeners.
+     *
+     * @param view The created view.
+     * @param savedInstanceState The saved instance state.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -58,17 +63,6 @@ class LoginFragment : Fragment() {
             this.requireActivity().getSharedPreferences(Constants.MYSHOPPAL_PREFERENCES, Context.MODE_PRIVATE)
         val username = sharedPreferences.getString(Constants.LOGGED_IN_USERNAME, "")!!
         Log.d("MyTag", username)
-        /*if(username.isNotEmpty()){
-            if(user.profileCompleted == 0){
-                val action = LoginFragmentDirections.actionLoginFragmentToUserProfileFragment(user)
-                findNavController().navigate(action)
-            }else {
-                // Redirect the user to Main Screen after log in.s
-                val action = LoginFragmentDirections.actionLoginFragmentToMainFragment()
-                findNavController().navigate(action)
-            }
-        }*/
-
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
 
@@ -143,18 +137,15 @@ class LoginFragment : Fragment() {
             )
         }
         registerButton.setOnClickListener {
-            //loadingProgressBar.visibility = View.VISIBLE
-            /*loginViewModel.register(
-                usernameEditText.text.toString(),
-                passwordEditText.text.toString(),
-                lifecycleScope
-            )*/
             val action = LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
             findNavController().navigate(action)
-
         }
     }
-
+    /**
+     * Handles the success scenario when a user logs in.
+     *
+     * @param user The logged-in user.
+     */
     fun userLoggedInSuccess(user: User) {
 
         // Print the user details in the log as of now.
@@ -176,14 +167,22 @@ class LoginFragment : Fragment() {
             openActivity(user)
         }
     }
-
+    /**
+     * Updates the UI with the logged-in user's information.
+     *
+     * @param model The LoggedInUserView object containing the user's information.
+     */
     private fun updateUiWithUser(model: LoggedInUserView) {
         val welcome = getString(R.string.welcome) + model.displayName
         // TODO : initiate successful logged in experience
         val appContext = context?.applicationContext ?: return
         Toast.makeText(appContext, welcome, Toast.LENGTH_LONG).show()
     }
-
+    /**
+     * Shows a login failure message.
+     *
+     * @param errorString The string resource ID for the error message.
+     */
     private fun showLoginFailed(@StringRes errorString: Int) {
         val appContext = context?.applicationContext ?: return
         Toast.makeText(appContext, errorString, Toast.LENGTH_LONG).show()
@@ -193,7 +192,11 @@ class LoginFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
+    /**
+     * Opens the NavigationDrawerActivity with the specified user.
+     *
+     * @param user The User object to be passed to the activity.
+     */
     fun openActivity(user:User) {
         val intent = Intent(activity, NavigationDrawerActivity::class.java)
         intent.putExtra("user", user)

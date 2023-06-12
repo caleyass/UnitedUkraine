@@ -98,7 +98,10 @@ class CharityDetailsFragment : Fragment() {
             }
         }
     }
-
+    /**
+     * Fetches the charity details from Firestore using the charityId
+     * and populates the fields accordingly.
+     */
     private fun fetchCharityDetails() {
         // Retrieve the charity details using the charityId
         // and populate the fields accordingly
@@ -108,7 +111,11 @@ class CharityDetailsFragment : Fragment() {
         FirestoreClass().getCharity(this,charityId);
 
     }
-
+    /**
+     * Populates the input fields with the given charity details.
+     *
+     * @param charity The charity object containing the details to populate.
+     */
     public fun populateFields(charity: Charity) {
         binding.etProductTitle.setText(charity.title)
         binding.etProductPrice.setText(charity.goal.toString())
@@ -121,7 +128,9 @@ class CharityDetailsFragment : Fragment() {
             .load(charity.image)
             .into(binding.ivProductImage)
     }
-
+    /**
+     * Updates the charity details in the database.
+     */
     private fun updateCharityDetails() {
         // Get the logged in username from the SharedPreferences that we have stored at a time of login.
         val username =
@@ -151,11 +160,17 @@ class CharityDetailsFragment : Fragment() {
 
         FirestoreClass().updateCharityDetails(this, product)
     }
-
+    /**
+     * Launches the image picker to select an image.
+     */
     private fun pickImage() {
         imagePickerLauncher.launch("image/*")
     }
-
+    /**
+     * Validates the entered charity details.
+     *
+     * @return True if the details are valid, false otherwise.
+     */
     private fun validateCharityDetails(): Boolean {
         return when {
 
@@ -208,6 +223,11 @@ class CharityDetailsFragment : Fragment() {
             }
         }
     }
+    /**
+     * Validates the entered charity details.
+     *
+     * @return True if the details are valid, false otherwise.
+     */
     private fun uploadCharityImage() {
         if(imageChanged) {
             FirestoreClass().uploadImageToCloudStorage(
@@ -219,9 +239,12 @@ class CharityDetailsFragment : Fragment() {
         else{
             updateCharityDetails()
         }
-
     }
-
+    /**
+     * Callback function called when the image upload is successful.
+     *
+     * @param imageURL The URL of the uploaded image.
+     */
     fun imageUploadSuccess(imageURL: String) {
         Toast.makeText(
             this.requireActivity(),
@@ -233,12 +256,16 @@ class CharityDetailsFragment : Fragment() {
         imageChanged = true
         updateCharityDetails()
     }
-
+    /**
+     * Called when the view is destroyed. Cleans up any resources associated with the view.
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
+    /**
+     * Clears the data in the input fields and resets the product image.
+     */
     fun clearData() {
         binding.etProductTitle.text.clear()
         binding.etProductPrice.text.clear()
@@ -246,10 +273,18 @@ class CharityDetailsFragment : Fragment() {
         binding.etProductQuantity.text.clear()
         binding.ivProductImage.setImageDrawable(null)
     }
-
+    /**
+     * Companion object for the CharityDetailsFragment class.
+     */
     public companion object {
         public const val ARG_CHARITY_ID = "charity_id"
-
+        /**
+         * Creates a new instance of CharityDetailsFragment.
+         *
+         * @param charityId The ID of the charity.
+         * @param owner True if the user is the owner of the charity, false otherwise.
+         * @return The newly created CharityDetailsFragment instance.
+         */
         public fun newInstance(charityId: String, owner: Boolean): CharityDetailsFragment {
             val args = Bundle()
             args.putString(ARG_CHARITY_ID, charityId)
@@ -258,7 +293,5 @@ class CharityDetailsFragment : Fragment() {
             fragment.arguments = args
             return fragment
         }
-
-
     }
 }

@@ -29,7 +29,11 @@ class CharityFragment:Fragment() {
         super.onViewCreated(view, savedInstanceState)
         FirestoreClass().getCharityList(this)
     }
-
+    /**
+     * Callback function called when the charity list is successfully retrieved from Firestore.
+     *
+     * @param productsList The list of charities retrieved from Firestore.
+     */
     fun successCharityListFromFireStore(productsList: ArrayList<Charity>) {
 
         // Hide Progress dialog.

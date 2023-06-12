@@ -88,11 +88,17 @@ class AddCharityFragment : Fragment() {
         )
     }
 
-
+    /**
+     * Launches the image picker to select an image.
+     */
     private fun pickImage() {
         imagePickerLauncher.launch("image/*")
     }
 
+    /**
+     * Validates the charity details before uploading.
+     * @return true if all details are valid, false otherwise.
+     */
     private fun validateCharityDetails(): Boolean {
         return when {
 
@@ -161,6 +167,9 @@ class AddCharityFragment : Fragment() {
             }
         }
     }
+    /**
+     * Uploads the charity image to the cloud storage.
+     */
     private fun uploadCharityImage() {
 
         FirestoreClass().uploadImageToCloudStorage(
@@ -168,9 +177,12 @@ class AddCharityFragment : Fragment() {
             mSelectedImageFileUri,
             Constants.PRODUCT_IMAGE
         )
-
     }
 
+    /**
+     * Callback function for successful image upload.
+     * @param imageURL The URL of the uploaded image.
+     */
     fun imageUploadSuccess(imageURL: String) {
         Toast.makeText(
             this.requireActivity(),
@@ -183,7 +195,11 @@ class AddCharityFragment : Fragment() {
         uploadCharityDetails()
     }
 
-
+    /**
+     * Uploads charity details to the database.
+     *
+     * @return True if the upload is successful, false otherwise.
+     */
     private fun uploadCharityDetails() {
 
         // Get the logged in username from the SharedPreferences that we have stored at a time of login.
@@ -210,9 +226,7 @@ class AddCharityFragment : Fragment() {
             mCharityImageURL,
             category
         )
-
         FirestoreClass().uploadCharityDetails(this, product)
-
     }
 
     /**
@@ -226,6 +240,9 @@ class AddCharityFragment : Fragment() {
         ).show()
     }
 
+    /**
+     * Clears the data in the input fields and resets the product image.
+     */
     fun clearData() {
         binding.etProductTitle.text.clear()
         binding.etProductPrice.text.clear()

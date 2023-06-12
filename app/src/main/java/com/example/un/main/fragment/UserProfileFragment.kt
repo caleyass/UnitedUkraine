@@ -154,8 +154,6 @@ class UserProfileFragment : Fragment() {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
                 // Permission is granted
-                //Toast.makeText(requireContext(), "The storage permission is granted.", Toast.LENGTH_LONG).show()
-                //Constants.showImageChooser(this.requireActivity())
                 pickImage()
             } else {
                 // Permission is not granted
