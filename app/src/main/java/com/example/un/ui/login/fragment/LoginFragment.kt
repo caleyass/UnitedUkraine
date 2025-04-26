@@ -153,17 +153,13 @@ class LoginFragment : Fragment() {
         Log.i("Last Name: ", user.lastName)
         Log.i("Email: ", user.email)
         viewModel.setUser(user)
-        viewModel.user.observe(viewLifecycleOwner){
-            it ->
-            Log.d("MyTag1", it.firstName)
-        }
         if(user.profileCompleted == 0){
             val action = LoginFragmentDirections.actionLoginFragmentToUserProfileFragment(user)
             findNavController().navigate(action)
         }else {
             // Redirect the user to Main Screen after log in.s
-            /*val action = LoginFragmentDirections.actionLoginFragmentToMainFragment()
-            findNavController().navigate(action)*/
+//            val action = LoginFragmentDirections.actionLoginFragmentToMainFragment(user)
+//            findNavController().navigate(action)
             openActivity(user)
         }
     }

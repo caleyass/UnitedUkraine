@@ -62,17 +62,10 @@ class UserProfileFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        user = this.requireActivity().intent.getParcelableExtra("user", User::class.java)
-        try {
-            val args: UserProfileFragmentArgs by navArgs()
-            if (args != null) {
-                if (args.extraUserDetails != null) {
-                    user = args.extraUserDetails
-                    openedFromFragment = true
-                }
-            }
-        } catch (e:IllegalStateException){
-
+        val args: UserProfileFragmentArgs by navArgs()
+        user = args.extraUserDetails ?: this.requireActivity().intent.getParcelableExtra("user", User::class.java)
+        if (args.extraUserDetails != null) {
+            openedFromFragment = true
         }
         Log.d("MyTag", user.toString())
         binding.etFirstName.isEnabled = false
@@ -142,9 +135,9 @@ class UserProfileFragment : Fragment() {
                 if(mSelectedImageFileUri!=null) {
                     uploadImageToCloudStorage(this, mSelectedImageFileUri)
                     updateUserProfileDetails()
-                    if(openedFromFragment){
-                        openActivity(user!!)
-                    }
+                }
+                if(openedFromFragment){
+                    openActivity(user!!)
                 }
             }
         }

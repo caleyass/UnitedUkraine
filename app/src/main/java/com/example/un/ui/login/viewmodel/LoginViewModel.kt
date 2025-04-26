@@ -20,8 +20,6 @@ import kotlinx.coroutines.withContext
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
-
-
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
 
