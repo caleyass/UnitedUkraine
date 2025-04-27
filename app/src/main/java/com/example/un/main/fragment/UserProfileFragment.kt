@@ -32,7 +32,6 @@ import com.example.un.data.model.User
 import com.example.un.databinding.FragmentUserProfileBinding
 import com.example.un.firestore.FirestoreClass
 import com.example.un.ui.login.LoginViewModelFactory
-import com.example.un.ui.login.SharedViewModel
 import com.example.un.ui.login.fragment.LoginFragmentDirections
 import com.example.un.ui.login.viewmodel.LoginViewModel
 import com.google.firebase.auth.FirebaseAuth

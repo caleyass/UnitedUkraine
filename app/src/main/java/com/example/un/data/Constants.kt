@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.un.main.fragment.AddCharityFragment
 import com.example.un.main.fragment.UserProfileFragment
-import com.example.un.ui.login.SharedViewModel
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 

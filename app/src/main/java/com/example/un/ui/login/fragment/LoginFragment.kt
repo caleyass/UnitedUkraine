@@ -29,7 +29,6 @@ import com.example.un.data.model.User
 import com.example.un.firestore.FirestoreClass
 import com.example.un.ui.login.LoggedInUserView
 import com.example.un.ui.login.LoginViewModelFactory
-import com.example.un.ui.login.SharedViewModel
 import com.example.un.ui.login.viewmodel.LoginViewModel
 
 class LoginFragment : Fragment() {
@@ -37,7 +36,6 @@ class LoginFragment : Fragment() {
     private lateinit var loginViewModel: LoginViewModel
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -152,7 +150,6 @@ class LoginFragment : Fragment() {
         Log.i("First Name: ", user.firstName)
         Log.i("Last Name: ", user.lastName)
         Log.i("Email: ", user.email)
-        viewModel.setUser(user)
         if(user.profileCompleted == 0){
             val action = LoginFragmentDirections.actionLoginFragmentToUserProfileFragment(user)
             findNavController().navigate(action)
